@@ -29,9 +29,9 @@ export class CrudDocenteComponent implements OnInit {
     estado:1,
     ubigeo:{
       idUbigeo: -1,
-      departamento:"-1",
-      provincia:"-1",
-      distrito:"-1",
+      departamento:"",
+      provincia:"",
+      distrito:"",
     }
   };
 
@@ -46,7 +46,7 @@ export class CrudDocenteComponent implements OnInit {
         response =>  this.provincias= response
       );
 
-      this.docente!.ubigeo!.provincia = "-1";
+      this.docente!.ubigeo!.provincia = "";
       this.distritos = [];
       this.docente!.ubigeo!.idUbigeo = -1;
 
@@ -97,9 +97,9 @@ export class CrudDocenteComponent implements OnInit {
               estado:1,
               ubigeo:{
                 idUbigeo: -1,
-                departamento:"-1",
-                provincia:"-1",
-                distrito:"-1",
+                departamento:"",
+                provincia:"",
+                distrito:"",
               }
         }
   }
@@ -141,9 +141,9 @@ export class CrudDocenteComponent implements OnInit {
           estado:1,
           ubigeo:{
             idUbigeo: -1,
-            departamento:"-1",
-            provincia:"-1",
-            distrito:"-1",
+            departamento:"",
+            provincia:"",
+            distrito:"",
           }
     }
 }

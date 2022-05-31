@@ -71,18 +71,34 @@
                 </div>
                 
                 <div class="modal-body">
-                    <form class="content"  (ngSubmit)="registra()">
+                    <form class="content"  (ngSubmit)="registra()" #registraForm="ngForm">
                         <div class="submit-form">
                             
                                 <div  class="row">
-                                    <div class="col-lg-10">
+                                    <div class="col-lg-8">
                                         <label for="id_reg_nombre">Nombre</label>
-                                        <input [(ngModel)]="docente.nombre" type="text" placeholder="Ingrese el nombre" class="form-control" name="nombre" id="id_reg_nombre" />
+                                        <input [(ngModel)]="docente.nombre" type="text" placeholder="Ingrese el nombre" class="form-control" name="nombre" id="id_reg_nombre" #validaNombre="ngModel" required pattern="[a-zA-Z ]{3,30}"/>
+                                        <div *ngIf="validaNombre.invalid && (validaNombre.dirty || validaNombre.touched)" class="alert alert-danger">
+                                            <div *ngIf="validaNombre.errors!.required">
+                                                El nombre es obligatorio
+                                            </div>   
+                                            <div *ngIf="validaNombre.errors!.pattern">
+                                                El nombre es de 3 a 30 caracteres
+                                            </div> 
+                                         </div>   
                                     </div>
                                     
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-4">
                                         <label for="id_reg_dni">DNI</label>
-                                        <input  [(ngModel)]="docente.dni" t type="text" placeholder="Ingrese DNI" class="form-control" name="dni" id="id_reg_dni"  maxlength="8"/>
+                                        <input  [(ngModel)]="docente.dni" t type="text" placeholder="Ingrese DNI" class="form-control" name="dni" id="id_reg_dni"  #validaDni="ngModel" required pattern="[0-9]{8}"/>
+                                        <div *ngIf="validaDni.invalid && (validaDni.dirty || validaDni.touched)" class="alert alert-danger">
+                                            <div *ngIf="validaDni.errors!.required">
+                                                     El DNI es obligatorio
+                                            </div>  
+                                            <div *ngIf="validaDni.errors!.pattern">
+                                                     El DNI es de 8 dígitos
+                                             </div>    
+                                       </div> 
                                     </div>
                                 </div>
 
@@ -91,32 +107,41 @@
                                     
                                     <div class="col-lg-4">
                                         <label for="id_reg_departamento">Departamento</label>
-                                        <select [(ngModel)]="docente.ubigeo!.departamento" (change)="cargaProvincia()"   id="id_reg_departamento" name="departamento" class="form-control">
-                                            <option value="-1"> [Seleccione] </option>
+                                        <select [(ngModel)]="docente.ubigeo!.departamento" (change)="cargaProvincia()" class="form-control"  name="validaDepartamento"   #validaDepartamento="ngModel" required>
+                                            <option value=""> [Seleccione] </option>
                                             <option *ngFor="let aux of departamentos" value="{{ aux }}"> 
                                                         {{ aux }}
                                             </option>
                                         </select>
+                                        <div *ngIf="validaDepartamento.invalid && (validaDepartamento.dirty || validaDepartamento.touched) " class="alert alert-danger">
+                                                      El Departamento es obligatorio
+                                        </div>
                                     </div>
 
                                     <div class="col-lg-4">
                                         <label  for="id_reg_provincia">Provincia</label>
-                                        <select  [(ngModel)]="docente.ubigeo!.provincia" (change)="cargaDistrito()"   id="id_reg_provincia" name="provincia" class="form-control" >
-                                            <option value="-1"> [Seleccione] </option>
+                                        <select  [(ngModel)]="docente.ubigeo!.provincia" (change)="cargaDistrito()" class="form-control" name="validaProvincia"  id="id_reg_provincia"  #validaProvincia="ngModel" required>
+                                            <option value=""> [Seleccione] </option>
                                              <option *ngFor="let aux of  provincias" value="{{ aux }}"> 
                                                         {{ aux }}
                                              </option>
                                         </select>
+                                        <div *ngIf="validaProvincia.invalid && (validaProvincia.dirty || validaProvincia.touched) " class="alert alert-danger">
+                                                    El Provincia es obligatorio
+                                        </div>
                                     </div>
 
                                     <div class="col-lg-4">
                                         <label for="id_reg_distrito">Distrito</label>
-                                        <select [(ngModel)]="docente.ubigeo!.idUbigeo"  id="id_reg_distrito" name="distrito" class="form-control">
-                                            <option value="-1"> [Seleccione] </option>
+                                        <select [(ngModel)]="docente.ubigeo!.idUbigeo"   class="form-control" class="form-control" name="distrito" id="id_reg_distrito"  #validaDistrito="ngModel" required>
+                                            <option value=""> [Seleccione] </option>
                                             <option *ngFor="let aux of  distritos" value="{{ aux.idUbigeo }}"> 
                                                 {{ aux.distrito }}
                                              </option>
                                         </select>
+                                        <div *ngIf="validaProvincia.invalid && (validaProvincia.dirty || validaProvincia.touched) " class="alert alert-danger">
+                                                    El Distrito es obligatorio
+                                        </div>
                                     </div>
                                 
                                 
@@ -128,7 +153,7 @@
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_reg_cerrar" style="width: 100px;">Close</button>
                             <div class="form-group text-center">
                                 <div class="col-lg-12">
-                                    <button id="id_reg_registra"  class="btn btn-success form-control"style="width: 100px;">Registrar</button>
+                                    <button id="id_reg_registra"  class="btn btn-success form-control"style="width: 100px;"  [disabled]="!registraForm.form.valid">Registrar</button>
                                 </div>
                             </div>
                         </div>
@@ -154,13 +179,13 @@
                 </div>
                 <div class="modal-body">
 
-                    <form class="content" (ngSubmit)="actualiza()">
+                    <form class="content" (ngSubmit)="actualiza()" >
                         <div class="submit-form">
 
                             <div  class="row">
                                 <div class="col-lg-8">
                                     <label for="id_act_nombre">Nombre</label>
-                                    <input [(ngModel)]="docente.nombre"  type="text" placeholder="Ingrese el nombre" class="form-control" name="nombre" id="id_act_nombre" />
+                                    <input [(ngModel)]="docente.nombre"  type="text" placeholder="Ingrese el nombre" class="form-control" name="validaNombre" id="id_act_nombre" #validaNombre="ngModel" required/>
                                 </div>
     
                                 <div class="col-lg-2">

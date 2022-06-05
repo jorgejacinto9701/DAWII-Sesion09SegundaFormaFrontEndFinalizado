@@ -133,13 +133,13 @@
 
                                     <div class="col-lg-4">
                                         <label for="id_reg_distrito">Distrito</label>
-                                        <select [(ngModel)]="docente.ubigeo!.idUbigeo"   class="form-control" class="form-control" name="distrito" id="id_reg_distrito"  #validaDistrito="ngModel" required>
-                                            <option value=""> [Seleccione] </option>
+                                        <select [(ngModel)]="docente.ubigeo!.idUbigeo"   class="form-control" class="form-control" name="distrito" id="id_reg_distrito"  #validaDistrito="ngModel" pattern="[0-9]{1,9}">
+                                            <option value="-1"> [Seleccione] </option>
                                             <option *ngFor="let aux of  distritos" value="{{ aux.idUbigeo }}"> 
                                                 {{ aux.distrito }}
                                              </option>
                                         </select>
-                                        <div *ngIf="validaProvincia.invalid && (validaProvincia.dirty || validaProvincia.touched) " class="alert alert-danger">
+                                        <div *ngIf="validaDistrito.invalid && (validaDistrito.dirty || validaDistrito.touched) " class="alert alert-danger">
                                                     El Distrito es obligatorio
                                         </div>
                                     </div>
@@ -254,13 +254,13 @@
     
                                 <div class="col-lg-4">
                                     <label for="id_act_distrito">Distrito</label>
-                                    <select [(ngModel)] = "docente.ubigeo!.idUbigeo" id="id_act_distrito" name="distrito" class="form-control" #validaDistrito="ngModel" required>
-                                        <option value=""> [Seleccione] </option>
+                                    <select [(ngModel)] = "docente.ubigeo!.idUbigeo" id="id_act_distrito" name="distrito" class="form-control" #validaDistrito="ngModel" required pattern="[0-9]{1,9}">
+                                        <option value="-1"> [Seleccione] </option>
                                         <option *ngFor="let aux of distritos"    value="{{ aux.idUbigeo }}">
                                             {{ aux.distrito }}
                                         </option> 
                                     </select>
-                                    <div *ngIf="validaProvincia.invalid && (validaProvincia.dirty || validaProvincia.touched) " class="alert alert-danger">
+                                    <div *ngIf="validaDistrito.invalid && (validaDistrito.dirty || validaDistrito.touched) " class="alert alert-danger">
                                         El Distrito es obligatorio
                                      </div>
                                 </div>

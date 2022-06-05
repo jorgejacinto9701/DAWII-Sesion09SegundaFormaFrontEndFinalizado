@@ -16,9 +16,9 @@ export class CrudDocenteComponent implements OnInit {
    filtro: string ="";
  
    //Para el ubigeo
-   departamentos: string[] = [];;
-   provincias: string[] = [];;
-   distritos: Ubigeo[] = [];;
+   departamentos: string[] = [];
+   provincias: string[] = [];
+   distritos: Ubigeo[] = [];
 
    
   //Json para registrar o actualizar
@@ -42,23 +42,36 @@ export class CrudDocenteComponent implements OnInit {
   }
 
   cargaProvincia(){
-      this.ubigeoService.listaProvincias(this.docente.ubigeo?.departamento).subscribe(
-        response =>  this.provincias= response
-      );
-
-      this.docente!.ubigeo!.provincia = "";
-      this.distritos = [];
-      this.docente!.ubigeo!.idUbigeo = -1;
-
-  }
-
-  cargaDistrito(){
-    this.ubigeoService.listaDistritos(this.docente.ubigeo?.departamento, this.docente.ubigeo?.provincia).subscribe(
-      response =>  this.distritos= response
-     );
-
-     this.docente!.ubigeo!.idUbigeo = -1;
+    console.log("departamento >>> " + this.docente.ubigeo?.departamento);
+   
+   if (this.docente.ubigeo?.departamento == ""){
+       this.provincias = [];
+   }else{
+       this.ubigeoService.listaProvincias(this.docente.ubigeo?.departamento).subscribe(
+         response =>  this.provincias= response
+       );
    }
+
+   this.docente!.ubigeo!.provincia = "";
+   this.distritos = [];
+   this.docente!.ubigeo!.idUbigeo = -1;
+
+}
+
+cargaDistrito(){
+ console.log("departamento >>> " + this.docente.ubigeo?.departamento);
+ console.log("provincia >>> " + this.docente.ubigeo?.provincia);
+
+ if (this.docente.ubigeo?.departamento == "" || this.docente.ubigeo?.provincia== "" ){
+     this.distritos = [];
+ }else{
+   this.ubigeoService.listaDistritos(this.docente.ubigeo?.departamento, this.docente.ubigeo?.provincia).subscribe(
+     response =>  this.distritos= response
+    );
+ }
+ 
+  this.docente!.ubigeo!.idUbigeo = -1;
+}
 
   ngOnInit(): void {
   }

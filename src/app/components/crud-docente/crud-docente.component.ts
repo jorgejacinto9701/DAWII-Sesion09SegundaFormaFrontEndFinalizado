@@ -90,6 +90,7 @@ cargaDistrito(){
   registra(){
         this.docenteService.registraDocente(this.docente).subscribe(
               (x) => {
+                document.getElementById("btn_reg_limpiar")?.click();
                 document.getElementById("btn_reg_cerrar")?.click();
                 alert(x.mensaje);
                 this.docenteService.listaDocente(this.filtro==""?"todos":this.filtro).subscribe(
@@ -135,7 +136,7 @@ cargaDistrito(){
   actualiza(){
     this.docenteService.actualizaDocente(this.docente).subscribe(
           (x) => {
-            
+            document.getElementById("btn_act_limpiar")?.click();
             document.getElementById("btn_act_cerrar")?.click();
             alert(x.mensaje);
             this.docenteService.listaDocente(this.filtro==""?"todos":this.filtro).subscribe(
